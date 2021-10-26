@@ -15,9 +15,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,23 +85,44 @@ public class RSSParser {
 
     public String getXmlFromUrl(String url) {
         String xml = null;
+//        Log.e("url",url);
+//        try {
+//            DefaultHttpClient httpClient = new DefaultHttpClient();
+//            HttpGet httpGet = new HttpGet(url);
+//            HttpResponse httpResponse = httpClient.execute(httpGet);
+//            HttpEntity httpEntity = httpResponse.getEntity();
+//            xml = EntityUtils.toString(httpEntity);
+//
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        } catch (ClientProtocolException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+      //  Log.e("XML",xml);
+        // return XML
 
+        StringBuilder content = new StringBuilder();
+        // list of rss items
         try {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(url);
+            URL url_rss = new URL(url);
+            InputStreamReader inputStreamReader = new InputStreamReader(url_rss.openConnection().getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                content.append(line);
+            }
+            bufferedReader.close();
 
-            HttpResponse httpResponse = httpClient.execute(httpGet);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            xml = EntityUtils.toString(httpEntity);
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // return XML
+        Log.e("XML",content.toString());
+        xml = content.toString();
         return xml;
     }
 

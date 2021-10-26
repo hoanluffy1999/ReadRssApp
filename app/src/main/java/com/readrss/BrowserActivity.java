@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import android.text.TextUtils;
+import android.view.Menu;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -14,6 +15,10 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.readrss.databinding.ActivityBrowserBinding;
+import com.readrss.databinding.ActivityMainBinding;
 
 
 public class BrowserActivity extends AppCompatActivity {
@@ -21,11 +26,15 @@ public class BrowserActivity extends AppCompatActivity {
 
     WebView webView;
     String url;
-
+    private ActivityBrowserBinding binding;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browser);
+        binding = ActivityBrowserBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.toolbardowload);
+        Toolbar toolbar = binding.toolbardowload;
+        toolbar.inflateMenu(R.menu.main);
         Intent in = getIntent();
         url = in.getStringExtra("url");
 
@@ -82,7 +91,12 @@ public class BrowserActivity extends AppCompatActivity {
             this.context = context;
         }
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 }
 
 

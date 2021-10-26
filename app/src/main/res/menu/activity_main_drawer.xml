@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/group_home" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/baseline_home_20"
@@ -17,16 +17,45 @@
 <!--            android:icon="@drawable/ic_menu_slideshow"-->
 <!--            android:title="@string/menu_slideshow" />-->
     </group>
-    <group android:checkableBehavior="single" android:id="@+id/group2">
+    <group android:id="@+id/group_down" android:checkableBehavior="single">
+        <item
+            android:id="@+id/news_dowload"
+            android:icon="@drawable/baseline_file_download_24"
+            android:title="Tin đã tải" />
+
+    </group>
+    <group  android:id="@+id/group2">
          <item
              android:id="@+id/nav_gallery"
              android:icon="@drawable/ic_menu_gallery"
-             android:title="@string/menu_gallery">
+             android:title="@string/cate_gory">
         <menu>
+            <group android:id="@+id/group_category">
                     <item
-                        android:id="@+id/nav_slideshow"
-                        android:icon="@drawable/ic_menu_slideshow"
-                        android:title="@string/menu_slideshow" />
+                        android:id="@+id/tin_moi"
+                        android:icon="@drawable/baseline_feed_20"
+                        android:title="Tin mới" />
+            <item
+                android:id="@+id/thoi_su"
+                android:icon="@drawable/baseline_feed_20"
+                android:title="Thời sự" />
+            <item
+                android:id="@+id/suc_khoe"
+                android:icon="@drawable/baseline_feed_20"
+                android:title="Sức Khỏe" />
+            <item
+                android:id="@+id/the_thao"
+                android:icon="@drawable/baseline_feed_20"
+                android:title="Thể thao" />
+            <item
+                android:id="@+id/giai_tri"
+                android:icon="@drawable/baseline_feed_20"
+                android:title="Giải trí" />
+            <item
+                android:id="@+id/giao_duc"
+                android:icon="@drawable/baseline_feed_20"
+                android:title="Giáo dục" />
+            </group>
         </menu>
 
     </item>

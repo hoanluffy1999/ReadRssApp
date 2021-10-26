@@ -1,6 +1,9 @@
 package com.readrss;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RSSItem {
 
     public String title;
@@ -14,8 +17,13 @@ public class RSSItem {
         this.title = title;
         this.link = link;
         this.description = description;
-        /// Pattern p = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
-        this.img =  description.split("src=")[1].split("''")[0];
+         Pattern p = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+        Matcher matcher = p.matcher(description);
+
+        if(matcher.find()){
+            this.img = matcher.group(1);
+        }
+
         this.pubdate = pubdate;
         this.guid = guid;
     }

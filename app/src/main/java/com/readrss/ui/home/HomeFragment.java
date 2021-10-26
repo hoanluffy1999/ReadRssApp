@@ -28,11 +28,7 @@ public class HomeFragment extends Fragment {
 
     public ListView lístNewspaperPage;
     public  String tutorials[]
-            = { "Algorithms", "Data Structures",
-            "Languages", "Interview Corner",
-            "GATE", "ISRO CS",
-            "UGC NET CS", "CS Subjects",
-            "Web Technologies" };
+            = { "https://vnexpress.net/","https://tuoitre.vn/","https://www.24h.com.vn/" };
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =

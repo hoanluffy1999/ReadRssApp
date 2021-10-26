@@ -66,9 +66,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected( MenuItem menuItem) {
                 int idGroup = menuItem.getGroupId();
-                if(idGroup == R.id.group2)
+                Toast.makeText(MainActivity.this,idGroup,Toast.LENGTH_SHORT);
+                if(idGroup == R.id.group_category)
                 {
-                    Toast.makeText(getApplicationContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+
+                    NavigationRoter(menuItem.getItemId());
                 }
                 //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
 
@@ -114,4 +116,30 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }*/
+
+    private  void NavigationRoter(int itemSelected)
+    {
+        switch (itemSelected)
+        {
+            case R.id.news_dowload:
+                break;
+            case R.id.tin_moi :
+                StartActivityListRss("https://vnexpress.net/rss/tin-moi-nhat.rss");
+                break;
+            case R.id.thoi_su:
+                break;
+            case R.id.the_thao:
+                break;
+            case R.id.giai_tri:
+                break;
+            case R.id.giao_duc:
+                break;
+            case R.id.suc_khoe:
+                break;
+        }
+    }
+    private  void StartActivityListRss(String dataSend)
+    {
+        startActivity(new Intent(MainActivity.this, RSSFeedActivity.class).putExtra("rssLink", dataSend));
+    }
 }

@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -16,6 +17,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +43,7 @@ public class RSSFeedActivity extends ListActivity {
     private static String TAG_TITLE = "title";
     private static String TAG_LINK = "link";
     private static String TAG_PUB_DATE = "pubDate";
+    private static  String TAG_IMG = "img";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +93,6 @@ public class RSSFeedActivity extends ListActivity {
             // rss link url
             String rss_url = args[0];
 
-            // list of rss items
             rssItems = rssParser.getRSSFeedItems(rss_url);
 
             // looping through each item
@@ -102,7 +108,7 @@ public class RSSFeedActivity extends ListActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
                 try {
                     Date mDate = sdf.parse(givenDateString);
-                    SimpleDateFormat sdf2 = new SimpleDateFormat("EEEE, dd MMMM yyyy - hh:mm a", Locale.US);
+                    SimpleDateFormat sdf2 = new SimpleDateFormat("EEEE, dd MMMM yyyy - hh:mm a",new Locale("vi", "VN"));
                     item.pubdate = sdf2.format(mDate);
 
                 } catch (ParseException e) {
@@ -114,7 +120,8 @@ public class RSSFeedActivity extends ListActivity {
                 map.put(TAG_TITLE, item.title);
                 map.put(TAG_LINK, item.link);
                 map.put(TAG_PUB_DATE, item.pubdate); // If you want parse the date
-
+                map.put(TAG_IMG,item.img);
+                Log.e("log",item.img + item.description);
                 // adding HashList to ArrayList
                 rssItemList.add(map);
             }
@@ -125,8 +132,8 @@ public class RSSFeedActivity extends ListActivity {
                     ListAdapter adapter = new SimpleAdapter(
                             RSSFeedActivity.this,
                             rssItemList, R.layout.rss_item_list_row,
-                            new String[]{TAG_LINK, TAG_TITLE, TAG_PUB_DATE},
-                            new int[]{R.id.page_url, R.id.title, R.id.pub_date});
+                            new String[]{TAG_LINK, TAG_TITLE, TAG_PUB_DATE,TAG_IMG},
+                            new int[]{R.id.page_url, R.id.title, R.id.pub_date,R.id.img});
 
                     // updating listview
                     setListAdapter(adapter);
