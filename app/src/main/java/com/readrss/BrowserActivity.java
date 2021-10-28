@@ -1,24 +1,43 @@
 package com.readrss;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.readrss.databinding.ActivityBrowserBinding;
 import com.readrss.databinding.ActivityMainBinding;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 
 
 public class BrowserActivity extends AppCompatActivity {
@@ -26,26 +45,53 @@ public class BrowserActivity extends AppCompatActivity {
 
     WebView webView;
     String url;
+    private Button buttonGo;
     private ActivityBrowserBinding binding;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBrowserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setSupportActionBar(binding.toolbardowload);
-        Toolbar toolbar = binding.toolbardowload;
-        toolbar.inflateMenu(R.menu.main);
+        buttonGo =binding.buttonGo;
+
+//        setSupportActionBar(binding.toolbardowload);
+//        Toolbar toolbar = binding.toolbardowload;
+//        toolbar.inflateMenu(R.menu.main);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if (item.getItemId() == R.id.action_settings) {
+//                    Log.e("test","a");
+//                    new DownloadTask().execute(url);
+//                    return true; // event is handled.
+//                }
+//                return false;
+//            }
+//        });
         Intent in = getIntent();
         url = in.getStringExtra("url");
-
+       // new DownloadTask().execute(url);
         if (TextUtils.isEmpty(url)) {
             Toast.makeText(getApplicationContext(), "URL not found", Toast.LENGTH_SHORT).show();
             finish();
         }
 
         webView = findViewById(R.id.webView);
+
         initWebView();
+        buttonGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(BrowserActivity.this,"Bạn đã click",Toast.LENGTH_SHORT).show();
+                new DownloadTask().execute(url);
+
+            }
+        });
         webView.loadUrl(url);
+
+
     }
 
     private void initWebView() {
@@ -96,6 +142,31 @@ public class BrowserActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.news_dowload:
+//                Log.e("test","a");
+//                new DownloadTask().execute(url);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+    static class DownloadTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
+            Document document = null;
+            try {
+                document = (Document)Jsoup.connect(strings[0]).get();
+                Log.e("html",document.html());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
 
