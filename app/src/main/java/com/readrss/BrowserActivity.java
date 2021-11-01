@@ -33,9 +33,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.readrss.databinding.ActivityBrowserBinding;
 import com.readrss.databinding.ActivityMainBinding;
+import com.readrss.serveices.DB.DbServices;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
@@ -84,8 +86,8 @@ public class BrowserActivity extends AppCompatActivity {
         buttonGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(BrowserActivity.this,"Bạn đã click",Toast.LENGTH_SHORT).show();
-                new DownloadTask().execute(url);
+               // Toast.makeText(BrowserActivity.this,"Bạn đã click",Toast.LENGTH_SHORT).show();
+                new DownloadTask(BrowserActivity.this).execute(url);
 
             }
         });
@@ -156,12 +158,21 @@ public class BrowserActivity extends AppCompatActivity {
 //        }
 //    }
     static class DownloadTask extends AsyncTask<String, Void, Void> {
+         private Context mContext;
+        public  DownloadTask(Context context){
+            mContext = context;
+        }
         @Override
         protected Void doInBackground(String... strings) {
             Document document = null;
+
+            DbServices dbServices = new DbServices(mContext);
             try {
                 document = (Document)Jsoup.connect(strings[0]).get();
-                Log.e("html",document.html());
+                Log.e("url",strings[0]);
+                Element title = document.getElementsByClass("title_news_detail").first();
+                Log.e("html",title.html());
+            //    Toast.makeText(mContext, title.html(), Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
