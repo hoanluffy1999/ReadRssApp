@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +36,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.readrss.databinding.ActivityBrowserBinding;
 import com.readrss.databinding.ActivityMainBinding;
 import com.readrss.serveices.DB.DbServices;
+import com.readrss.serveices.DB.FeedReaderModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -55,7 +58,7 @@ public class BrowserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityBrowserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        buttonGo =binding.buttonGo;
+        buttonGo = binding.buttonGo;
 
 //        setSupportActionBar(binding.toolbardowload);
 //        Toolbar toolbar = binding.toolbardowload;
@@ -157,7 +160,7 @@ public class BrowserActivity extends AppCompatActivity {
 //                return super.onOptionsItemSelected(item);
 //        }
 //    }
-    static class DownloadTask extends AsyncTask<String, Void, Void> {
+    public class DownloadTask extends AsyncTask<String, Void, Void> {
          private Context mContext;
         public  DownloadTask(Context context){
             mContext = context;
@@ -171,13 +174,28 @@ public class BrowserActivity extends AppCompatActivity {
                 document = (Document)Jsoup.connect(strings[0]).get();
                 Log.e("url",strings[0]);
                 Element title = document.getElementsByClass("title_news_detail").first();
-                Log.e("html",title.html());
-            //    Toast.makeText(mContext, title.html(), Toast.LENGTH_SHORT).show();
+           //     Element date = document.getElementsByClass("metadate").first();
+                FeedReaderModel model = new FeedReaderModel(title.text(),document.html(),strings[0],"","");
+                dbServices.Create(model);
+                Log.e("id",model.getId() + "");
+             // Toast.makeText((), "Tải tin thành công", Toast.LENGTH_LONG).show();
+                postToastMessage("Tải tin thành công");
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
         }
+    }
+    public void postToastMessage(final String message) {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        handler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                Toast.makeText(BrowserActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
 

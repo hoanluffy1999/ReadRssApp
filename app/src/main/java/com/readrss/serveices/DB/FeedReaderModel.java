@@ -5,6 +5,16 @@ public class FeedReaderModel {
     public String content;
     public String url;
     public  String img;
+    public  long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+
+    }
 
     public FeedReaderModel(String title, String content, String url, String img, String date) {
         this.title = title;

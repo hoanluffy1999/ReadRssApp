@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                     NavigationRoter(menuItem.getItemId());
                 }
+                else if(idGroup == R.id.news_dowload)
                 //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
 
 

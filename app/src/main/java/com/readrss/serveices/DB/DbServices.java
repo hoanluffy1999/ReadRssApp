@@ -26,6 +26,7 @@ public class DbServices {
         values.put(FeedReader.FeedEntry.COLUMN_NAME_DATE, model.getDate());
 // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(FeedReader.FeedEntry.TABLE_NAME, null, values);
+        model.setId(newRowId);
         return  model;
     }
     public ArrayList<FeedReaderModel> Get()

@@ -17,10 +17,9 @@ public final class FeedReader {
                 "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                         FeedEntry._ID + " INTEGER PRIMARY KEY," +
                         FeedEntry.COLUMN_NAME_TITLE + " TEXT," +
-                        FeedEntry.COLUMN_NAME_CONTENT + " TEXT" +
-                        FeedEntry.COLUMN_NAME_CONTENT + " TEXT" +
-                        FeedEntry.COLUMN_NAME_URL + " TEXT" +
-                        FeedEntry.COLUMN_NAME_IMG + " TEXT" +
+                        FeedEntry.COLUMN_NAME_CONTENT + " TEXT," +
+                        FeedEntry.COLUMN_NAME_URL + " TEXT," +
+                        FeedEntry.COLUMN_NAME_IMG + " TEXT," +
                         FeedEntry.COLUMN_NAME_DATE + " TEXT" +
                         ")";
 
