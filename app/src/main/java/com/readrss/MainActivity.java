@@ -72,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
                     NavigationRoter(menuItem.getItemId());
                 }
-                else if(idGroup == R.id.news_dowload)
+                else if(menuItem.getItemId() == R.id.news_dowload)
+                {
+
+                    startActivity(new Intent(MainActivity.this, RSSFeedDowloadActivity.class).putExtra("rssLink", "https://vnexpress.net/rss/tin-moi-nhat.rss"));
+                }
                 //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
 
 

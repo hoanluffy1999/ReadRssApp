@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.readrss">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -12,24 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication3">
-        <activity android:name="com.readrss.MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication3.NoActionBar">
             >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
-        <activity android:name="com.readrss.BrowserActivity" android:theme="@style/Theme.MyApplication3.NoActionBar" >
-
-        </activity>
-        <activity android:name="com.readrss.RSSFeedActivity" />
+        <activity
+            android:name=".BrowserActivity"
+            android:theme="@style/Theme.MyApplication3.NoActionBar"></activity>
+        <activity android:name=".RSSFeedActivity" />
+        <activity android:name=".RSSFeedDowloadActivity" />
     </application>
 
 </manifest>

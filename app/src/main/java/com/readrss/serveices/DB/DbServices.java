@@ -12,8 +12,8 @@ public class DbServices {
     private SQLiteDatabase db ;
     public DbServices(Context context)
     {
-        DbHelper dbHelper = new DbHelper(context);
-        db  = dbHelper.getWritableDatabase();
+
+        db  = DbHelper.getInstance(context).getWritableDatabase();
     }
     public FeedReaderModel Create(FeedReaderModel model){
 

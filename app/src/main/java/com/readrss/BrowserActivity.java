@@ -172,13 +172,9 @@ public class BrowserActivity extends AppCompatActivity {
             DbServices dbServices = new DbServices(mContext);
             try {
                 document = (Document)Jsoup.connect(strings[0]).get();
-                Log.e("url",strings[0]);
                 Element title = document.getElementsByClass("title_news_detail").first();
-           //     Element date = document.getElementsByClass("metadate").first();
                 FeedReaderModel model = new FeedReaderModel(title.text(),document.html(),strings[0],"","");
                 dbServices.Create(model);
-                Log.e("id",model.getId() + "");
-             // Toast.makeText((), "Tải tin thành công", Toast.LENGTH_LONG).show();
                 postToastMessage("Tải tin thành công");
             } catch (IOException e) {
                 e.printStackTrace();
