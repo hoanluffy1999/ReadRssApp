@@ -35,7 +35,7 @@
         </TextView>
         <ListView
 
-            android:id="@+id/list"
+            android:id="@+id/list_source"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

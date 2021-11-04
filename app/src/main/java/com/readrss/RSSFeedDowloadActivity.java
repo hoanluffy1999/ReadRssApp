@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.readrss.serveices.DB.DbServices;
@@ -28,12 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class RSSFeedDowloadActivity extends ListActivity {
+public class RSSFeedDowloadActivity extends AppCompatActivity {
 
 
     private ProgressBar pDialog;
     ArrayList<HashMap<String, String>> rssItemList = new ArrayList<>();
-
+private ListView lv;
     RSSParser rssParser = new RSSParser();
     Toolbar toolbar;
 
@@ -49,10 +51,18 @@ public class RSSFeedDowloadActivity extends ListActivity {
         setContentView(R.layout.activity_rss_feed);
 
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarList);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
         String rss_link = getIntent().getStringExtra("rssLink");
+        String title = getIntent().getStringExtra("title");
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setTitle(title);
         new LoadRSSFeedDowloadItems(this).execute(rss_link);
 
-        ListView lv = getListView();
+         lv = findViewById(R.id.list);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -65,7 +75,11 @@ public class RSSFeedDowloadActivity extends ListActivity {
             }
         });
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     public class LoadRSSFeedDowloadItems extends AsyncTask<String, String, String> {
         private Context mContext;
         private DbServices dbServices;
@@ -95,9 +109,9 @@ public class RSSFeedDowloadActivity extends ListActivity {
         @Override
         protected String doInBackground(String... args) {
             // rss link url
-            String rss_url = args[0];
+           // String rss_url = args[0];
             ArrayList<FeedReaderModel> data = dbServices.Get();
-            rssItems = rssParser.getRSSFeedItems(rss_url);
+           // rssItems = rssParser.getRSSFeedItems(rss_url);
             Log.e("data count", data.size() + "");
             // looping through each item
             for (FeedReaderModel item : data) {
@@ -140,7 +154,7 @@ public class RSSFeedDowloadActivity extends ListActivity {
                             new int[]{R.id.page_url, R.id.title, R.id.pub_date,R.id.img});
 
                     // updating listview
-                    setListAdapter(adapter);
+                   lv.setAdapter(adapter);
                 }
             });
             return null;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -48,17 +49,9 @@ public class DbServices {
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
                 FeedReader.FeedEntry.COLUMN_NAME_TITLE + " DESC";
+        String selectQuery = "SELECT  * FROM " + FeedReader.FeedEntry.TABLE_NAME;
 
-        Cursor cursor = db.query(
-                FeedReader.FeedEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
-        );
-
+        Cursor cursor = db.rawQuery(selectQuery, null);
         while(cursor.moveToNext()) {
 
             FeedReaderModel item = new FeedReaderModel(cursor.getString(1),

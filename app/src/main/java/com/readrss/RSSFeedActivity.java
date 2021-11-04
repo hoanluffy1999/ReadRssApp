@@ -15,6 +15,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.BufferedReader;
@@ -30,12 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class RSSFeedActivity extends ListActivity {
+public class RSSFeedActivity extends AppCompatActivity {
 
 
     private ProgressBar pDialog;
     ArrayList<HashMap<String, String>> rssItemList = new ArrayList<>();
-
+    private ListView lv;
     RSSParser rssParser = new RSSParser();
     Toolbar toolbar;
 
@@ -50,11 +52,18 @@ public class RSSFeedActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rss_feed);
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarList);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
         String rss_link = getIntent().getStringExtra("rssLink");
+        String title = getIntent().getStringExtra("title");
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setTitle(title);
         new LoadRSSFeedItems().execute(rss_link);
 
-        ListView lv = getListView();
+         lv = (ListView) findViewById(R.id.list);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -67,7 +76,11 @@ public class RSSFeedActivity extends ListActivity {
             }
         });
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     public class LoadRSSFeedItems extends AsyncTask<String, String, String> {
 
         @Override
@@ -136,7 +149,7 @@ public class RSSFeedActivity extends ListActivity {
                             new int[]{R.id.page_url, R.id.title, R.id.pub_date,R.id.img});
 
                     // updating listview
-                    setListAdapter(adapter);
+                    lv.setAdapter(adapter);
                 }
             });
             return null;

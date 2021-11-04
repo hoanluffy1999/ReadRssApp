@@ -175,7 +175,7 @@ public class BrowserActivity extends AppCompatActivity {
                 Element title = document.getElementsByClass("title_news_detail").first();
                 FeedReaderModel model = new FeedReaderModel(title.text(),document.html(),strings[0],"","");
                 dbServices.Create(model);
-                postToastMessage("Tải tin thành công");
+                postToastMessage("Tải tin thành công" + model.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }

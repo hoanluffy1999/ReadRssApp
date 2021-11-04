@@ -75,7 +75,11 @@ public class MainActivity extends AppCompatActivity {
                 else if(menuItem.getItemId() == R.id.news_dowload)
                 {
 
-                    startActivity(new Intent(MainActivity.this, RSSFeedDowloadActivity.class).putExtra("rssLink", "https://vnexpress.net/rss/tin-moi-nhat.rss"));
+
+                    Intent intent = new Intent(MainActivity.this, RSSFeedDowloadActivity.class);
+                    intent.putExtra("rssLink", "vn");
+                    intent.putExtra("title", "Tin tải về");
+                    startActivity(intent);
                 }
                 //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
 
@@ -129,22 +133,29 @@ public class MainActivity extends AppCompatActivity {
             case R.id.news_dowload:
                 break;
             case R.id.tin_moi :
-                StartActivityListRss("https://vnexpress.net/rss/tin-moi-nhat.rss");
+                StartActivityListRss("https://vnexpress.net/rss/tin-moi-nhat.rss","Tin Mới");
                 break;
             case R.id.thoi_su:
+                StartActivityListRss("https://vnexpress.net/rss/thoi-su.rss","Thời sự");
                 break;
             case R.id.the_thao:
+                StartActivityListRss("https://vnexpress.net/rss/the-thao.rss","Thể thao");
                 break;
             case R.id.giai_tri:
+                StartActivityListRss("https://vnexpress.net/rss/gia-tri.rss","Giải trí");
                 break;
             case R.id.giao_duc:
+                StartActivityListRss("https://vnexpress.net/rss/giao-duc.rss","Giáo dục");
                 break;
             case R.id.suc_khoe:
+                StartActivityListRss("https://vnexpress.net/rss/suc-khoe.rss","Sức khỏe");
                 break;
         }
     }
-    private  void StartActivityListRss(String dataSend)
+    private  void StartActivityListRss(String dataSend,String title)
     {
-        startActivity(new Intent(MainActivity.this, RSSFeedActivity.class).putExtra("rssLink", dataSend));
-    }
+        Intent intent = new Intent(MainActivity.this, RSSFeedActivity.class);
+        intent.putExtra("rssLink", dataSend);
+        intent.putExtra("title", title);
+        startActivity(intent); }
 }

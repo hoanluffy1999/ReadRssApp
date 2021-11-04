@@ -30,8 +30,8 @@
         <activity
             android:name=".BrowserActivity"
             android:theme="@style/Theme.MyApplication3.NoActionBar"></activity>
-        <activity android:name=".RSSFeedActivity" />
-        <activity android:name=".RSSFeedDowloadActivity" />
+        <activity android:theme="@style/Theme.MyApplication3.NoActionBar" android:name=".RSSFeedActivity" />
+        <activity  android:theme="@style/Theme.MyApplication3.NoActionBar" android:name=".RSSFeedDowloadActivity" />
     </application>
 
 </manifest>
