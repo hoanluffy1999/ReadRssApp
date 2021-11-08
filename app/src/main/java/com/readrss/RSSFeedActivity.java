@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
+// Danh sách tin theo danh mục (thời sự, thể thao....)
 public class RSSFeedActivity extends AppCompatActivity {
 
 
@@ -63,7 +63,7 @@ public class RSSFeedActivity extends AppCompatActivity {
         ab.setTitle(title);
         new LoadRSSFeedItems().execute(rss_link);
 
-         lv = (ListView) findViewById(R.id.list);
+        lv = (ListView) findViewById(R.id.list);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -81,6 +81,7 @@ public class RSSFeedActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+    //
     public class LoadRSSFeedItems extends AsyncTask<String, String, String> {
 
         @Override
@@ -100,7 +101,7 @@ public class RSSFeedActivity extends AppCompatActivity {
             pDialog.setVisibility(View.VISIBLE);
             relativeLayout.addView(pDialog);
         }
-
+        // đọc rss từ url
         @Override
         protected String doInBackground(String... args) {
             // rss link url
@@ -140,6 +141,7 @@ public class RSSFeedActivity extends AppCompatActivity {
             }
 
             // updating UI from Background Thread
+            // Hiển thị danh sách tin
             runOnUiThread(new Runnable() {
                 public void run() {
                     ListAdapter adapter = new SimpleAdapter(

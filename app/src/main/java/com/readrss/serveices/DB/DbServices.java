@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import java.util.ArrayList;
-
+// Xử lý sqlte
 public class DbServices {
     private SQLiteDatabase db ;
     public DbServices(Context context)

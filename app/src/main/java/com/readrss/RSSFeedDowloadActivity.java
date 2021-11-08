@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
+// Danh sách tin đã tải
 public class RSSFeedDowloadActivity extends AppCompatActivity {
 
 
@@ -80,6 +80,7 @@ private ListView lv;
         onBackPressed();
         return true;
     }
+    // Lấy danh sách tin từ Sqlite và hiện ra
     public class LoadRSSFeedDowloadItems extends AsyncTask<String, String, String> {
         private Context mContext;
         private DbServices dbServices;
@@ -105,7 +106,7 @@ private ListView lv;
             pDialog.setVisibility(View.VISIBLE);
             relativeLayout.addView(pDialog);
         }
-
+        //
         @Override
         protected String doInBackground(String... args) {
             // rss link url
@@ -120,19 +121,7 @@ private ListView lv;
                     break;
                 HashMap<String, String> map = new HashMap<String, String>();
 
-                // adding each child node to HashMap key => value
 
-              //  String givenDateString = item.getDate().trim();
-               // SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
-             //   try {
-                    //Date mDate = sdf.parse(givenDateString);
-                   // SimpleDateFormat sdf2 = new SimpleDateFormat("EEEE, dd MMMM yyyy - hh:mm a",new Locale("vi", "VN"));
-                 //   item.pubdate = sdf2.format(mDate);
-
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//
-//                }
 
 
                 map.put(TAG_TITLE, item.getTitle());

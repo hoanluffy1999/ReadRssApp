@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        //Tạo menu
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home)
                 .setOpenableLayout(drawer)
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //            subMenu.add(R.id.group2, Menu.NONE, Menu.NONE, "Menu Item "+i+" Title");
 ////            itemSub.setIcon(R.mipmap.baseline_toc_black_24);
 //        }
+        // Xử lý xự kiện click trên menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected( MenuItem menuItem) {
@@ -69,13 +71,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,idGroup,Toast.LENGTH_SHORT);
                 if(idGroup == R.id.group_category)
                 {
-
+                    // mở danh sách tin
                     NavigationRoter(menuItem.getItemId());
                 }
                 else if(menuItem.getItemId() == R.id.news_dowload)
                 {
-
-
+                    // Mở màn hình tin tải về
                     Intent intent = new Intent(MainActivity.this, RSSFeedDowloadActivity.class);
                     intent.putExtra("rssLink", "vn");
                     intent.putExtra("title", "Tin tải về");
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }*/
-
+    // Mở các màn hình danh sách
     private  void NavigationRoter(int itemSelected)
     {
         switch (itemSelected)

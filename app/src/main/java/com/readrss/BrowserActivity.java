@@ -43,8 +43,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-
-
+// màn hiển thị chi tiết tin
+// Mỗi file activity sẽ có 1 file xml tương ứng trong res
 public class BrowserActivity extends AppCompatActivity {
 
 
@@ -57,25 +57,12 @@ public class BrowserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBrowserBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(binding.getRoot()); // set view cho màn
         buttonGo = binding.buttonGo;
 
-//        setSupportActionBar(binding.toolbardowload);
-//        Toolbar toolbar = binding.toolbardowload;
-//        toolbar.inflateMenu(R.menu.main);
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                if (item.getItemId() == R.id.action_settings) {
-//                    Log.e("test","a");
-//                    new DownloadTask().execute(url);
-//                    return true; // event is handled.
-//                }
-//                return false;
-//            }
-//        });
+
         Intent in = getIntent();
+        // lấy link tin
         url = in.getStringExtra("url");
        // new DownloadTask().execute(url);
         if (TextUtils.isEmpty(url)) {
@@ -98,7 +85,7 @@ public class BrowserActivity extends AppCompatActivity {
 
 
     }
-
+    // Code xử lý hiển thị tin lên màn hình
     private void initWebView() {
         webView.setWebChromeClient(new MyWebChromeClient(this));
         webView.clearCache(true);
@@ -148,18 +135,8 @@ public class BrowserActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        switch (item.getItemId()) {
-//            case R.id.news_dowload:
-//                Log.e("test","a");
-//                new DownloadTask().execute(url);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+
+    // Code xử lý tải tin và lưu vào Sqlite
     public class DownloadTask extends AsyncTask<String, Void, Void> {
          private Context mContext;
         public  DownloadTask(Context context){
